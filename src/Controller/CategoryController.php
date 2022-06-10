@@ -32,7 +32,6 @@ class CategoryController extends AbstractController
             $categoryRepository->add($category, true);
             $this->addFlash('success', 'La catégorie à bien été enregistrée');
 
-            // Redirection vers une autre page
             return $this->redirectToRoute('app_category');
         }
 
@@ -51,7 +50,6 @@ class CategoryController extends AbstractController
             $categoryRepository->add($category, true);
             $this->addFlash('success', 'La catégorie à bien été enregistrée');
 
-            // Redirection vers une autre page
             return $this->redirectToRoute('app_category');
         }
 
