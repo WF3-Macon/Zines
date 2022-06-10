@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Magazines !{% endblock %}
+
+{% block body %}
+
+    <div class="d-flex align-items-center justify-content-between pb-5">
+        <div>
+            <h1 class="display-5 m-0">Magazines</h1>
+            <p class="lead">Liste de tous les magazines</p>
+        </div>
+        <a href="{{ path('new_magazine') }}" title="Nouveau magazine" class="btn btn-success">
+            Nouveau magazine
+        </a>
+    </div>
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <table class="table">
+        <thead>
+            <tr class="table-warning">
+                <th>Titre du magazine</th>
+                <th>Détails</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for magazine in magazines %}
+                <tr>
+                    <td class="py-3">{{ magazine.name }}</td>
+                    <td class="py-3">
+                        <a href="{{ path('details_magazine', { id: magazine.id }) }}" class="btn btn-outline-warning btn-sm">
+                            Voir plus de détails...
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

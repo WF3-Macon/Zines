@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Magazines !{% endblock %}
+
+{% block body %}
+
+    <style>
+        .colorCategory {
+            height: 12px;
+            width: 12px;
+            border-radius: 50%;
+            background-color: {{ magazine.category.color }};
+        }
+    </style>
+
+    <div class="d-flex align-items-center justify-content-between">
+        <h1 class="display-4">{{ magazine.name }}</h1>
+        <p class="display-6">{{ magazine.price }}€</p>
+    </div>
+
+    <div class="d-flex align-items-center justify-content-between pb-5">
+        <p class="muted">Créer le {{ magazine.createdAt|date('d.m.Y') }}</p>
+        <div class="d-flex align-items-center">
+            <div class="colorCategory me-1"></div> {{ magazine.category.name }}
+        </div>
+    </div>
+
+    <p>Image</p>
+    <p>Description</p>
+
+{% endblock %}
