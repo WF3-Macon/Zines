@@ -45,9 +45,9 @@
                         </div>
                     </td>
                     <td class="py-3">
-                        <a href="{{ path('app_category_edit', { id: category.id }) }}" title="Editer cette catégorie" class="btn btn-sm btn-secondary">Editer</a>
+                        <a href="{{ path('app_category_edit', { id: category.id }) }}" title="Editer cette catégorie" class="btn btn-sm btn-outline-secondary">Editer</a>
                         
-                        <form action="{{ path('app_category_delete', { id: category.id }) }}" method="post">
+                        <form action="{{ path('app_category_delete', { id: category.id }) }}" method="post" class="d-inline">
                             <input type="hidden" name="token" value="{{ csrf_token('delete-category-'~ category.id) }}">
                             <button class="btn btn-sm btn-outline-danger">Supprimer</button>
                         </form>    

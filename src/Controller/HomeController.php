@@ -8,6 +8,7 @@ use App\Repository\MagazineRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class HomeController extends AbstractController
@@ -45,5 +46,17 @@ class HomeController extends AbstractController
         return $this->render('home/new.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+    #[Route('/magazine/delete/{id}', name:'magazine_delete', requirements: ['id' => '\d+'], methods: ['POST'])]
+    public function delete(Magazine $magazine, Request $request, MagazineRepository $magazineRepository): RedirectResponse
+    {
+        $tokenCsrf = $request->request->get('token');
+        if ($this->isCsrfTokenValid('delete-magazine-'. $magazine->getId(), $tokenCsrf)) {
+            $magazineRepository->remove($magazine, true);
+            $this->addFlash('success', 'Le magazine à bien été supprimé');
+        }
+
+        return $this->redirectToRoute('app_home');
     }
 }
