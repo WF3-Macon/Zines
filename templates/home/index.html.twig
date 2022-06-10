@@ -35,9 +35,9 @@
                         <a href="{{ path('details_magazine', { id: magazine.id }) }}" class="btn btn-outline-warning btn-sm">
                             Voir plus de détails...
                         </a>
-                        
-                        <a href="" class="btn btn-sm btn-outline-secondary">Editer</a>
-                    
+
+                        <a href="{{ path('edit_magazine', { id: magazine.id }) }}" class="btn btn-sm btn-outline-secondary">Editer</a>
+
                         <form action="{{ path('magazine_delete', { id: magazine.id }) }}" method="post" class="d-inline">
                             <input type="hidden" name="token" value="{{ csrf_token('delete-magazine-'~ magazine.id) }}">
                             <button class="btn btn-sm btn-outline-danger">Supprimer</button>

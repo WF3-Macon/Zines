@@ -48,6 +48,24 @@ class HomeController extends AbstractController
         ]);
     }
 
+	#[Route('/magazine/edit/{id}', name: 'edit_magazine', requirements:['id' => '\d+'])]
+	public function edit(Magazine $magazine, Request $request, MagazineRepository $magazineRepository): Response
+	{
+		$form = $this->createForm(MagazineFormType::class, $magazine);
+		$form->handleRequest($request);
+
+		if ($form->isSubmitted() && $form->isValid()) {
+			$magazineRepository->add($magazine, true);
+			$this->addFlash('success', 'Le magazine à bien été modifié');
+
+			return $this->redirectToRoute('app_home');
+		}
+
+		return $this->render('home/edit.html.twig', [
+			'form' => $form->createView()
+		]);
+	}
+
     #[Route('/magazine/delete/{id}', name:'magazine_delete', requirements: ['id' => '\d+'], methods: ['POST'])]
     public function delete(Magazine $magazine, Request $request, MagazineRepository $magazineRepository): RedirectResponse
     {
