@@ -19,12 +19,16 @@ class Magazine
     private $id;
 
     #[ORM\Column(type: 'string', length: 40)]
+	#[Assert\NotBlank(message: 'Le titre du magazine est obligatoire')]
     private $name;
 
     #[ORM\Column(type: 'integer')]
+	#[Assert\NotBlank(message: 'Le prix du magazine est obligatoire')]
     private $price;
 
     #[ORM\Column(type: 'datetime_immutable')]
+	#[Assert\Type(\DateTimeImmutable::class)]
+	#[Assert\NotBlank(message: 'Le date de sortie est obligatoire')]
     private $created_at;
 
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'magazines')]
@@ -79,7 +83,7 @@ class Magazine
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): self
+    public function setCreatedAt(?\DateTimeImmutable $created_at): self
     {
         $this->created_at = $created_at;
 
