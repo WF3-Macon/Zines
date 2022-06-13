@@ -10,14 +10,21 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Knp\Component\Pager\PaginatorInterface;
 
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(MagazineRepository $magazineRepository): Response
+    public function index(MagazineRepository $magazineRepository, PaginatorInterface $paginatorInterface, Request $request): Response
     {
+        $magazines = $paginatorInterface->paginate(
+            $magazineRepository->findAll(),
+            $request->query->getInt('page', 1),
+            5
+        );
+
         return $this->render('home/index.html.twig', [
-            'magazines' => $magazineRepository->findAll()
+            'magazines' => $magazines
         ]);
     }
 
@@ -44,6 +51,24 @@ class HomeController extends AbstractController
         }
 
         return $this->render('home/new.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    #[Route('/magazine/edit/{id}', name: 'edit_magazine', requirements: ['id' => '\d+'])]
+    public function edit(Magazine $magazine, Request $request, MagazineRepository $magazineRepository): Response
+    {
+        $form = $this->createForm(MagazineFormType::class, $magazine);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $magazineRepository->add($magazine, true);
+            $this->addFlash('success', 'Le magazine à bien été modifié');
+
+            return $this->redirectToRoute('app_home');
+        }
+
+        return $this->render('home/edit.html.twig', [
             'form' => $form->createView()
         ]);
     }

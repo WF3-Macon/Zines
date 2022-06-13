@@ -23,6 +23,7 @@
     <table class="table">
         <thead>
             <tr class="table-warning">
+                <th>Aperçu</th>
                 <th>Titre du magazine</th>
                 <th>Actions</th>
             </tr>
@@ -30,13 +31,19 @@
         <tbody>
             {% for magazine in magazines %}
                 <tr>
+                    <td class="py-3">
+                        {# Si l'image existe, on l'affiche en appliquant un filtre #}
+                        {% if vich_uploader_asset(magazine, 'coverFile') is not null %}
+                            <img src="{{ vich_uploader_asset(magazine, 'coverFile')|imagine_filter('thumb') }}" alt="{{ magazine.name }}">
+                        {% endif %}
+                    </td>
                     <td class="py-3">{{ magazine.name }}</td>
                     <td class="py-3">
                         <a href="{{ path('details_magazine', { id: magazine.id }) }}" class="btn btn-outline-warning btn-sm">
                             Voir plus de détails...
                         </a>
                         
-                        <a href="" class="btn btn-sm btn-outline-secondary">Editer</a>
+                        <a href="{{ path('edit_magazine', { id: magazine.id }) }}" class="btn btn-sm btn-outline-secondary">Editer</a>
                     
                         <form action="{{ path('magazine_delete', { id: magazine.id }) }}" method="post" class="d-inline">
                             <input type="hidden" name="token" value="{{ csrf_token('delete-magazine-'~ magazine.id) }}">
@@ -47,5 +54,7 @@
             {% endfor %}
         </tbody>
     </table>
+
+    {{ knp_pagination_render(magazines) }}
 
 {% endblock %}

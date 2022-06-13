@@ -25,7 +25,14 @@
         </div>
     </div>
 
-    <p>Image</p>
-    <p>Description</p>
+    {% if vich_uploader_asset(magazine, 'coverFile') is not null %}
+        <p>
+            {# <img src="{{ asset('imgs/upload/magazines/'~ magazine.cover) }}" alt="{{ magazine.name }}">
+            <img src="/imgs/upload/magazines/{{ magazine.cover }}" alt="{{ magazine.name }}"> #}
+            <img src="{{ vich_uploader_asset(magazine, 'coverFile')|imagine_filter('details') }}" alt="{{ magazine.name }}">
+        </p>
+    {% endif %}
+    
+    <p>{{ magazine.description }}</p>
 
 {% endblock %}
