@@ -30,6 +30,24 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_category') }}">Catégories</a>
                     </li>
+                    <li class="nav-item d-flex align-items-center px-2 my-2">
+                        <div class="vr text-white"></div>
+                    </li>
+                    {% if app.user is not null %}
+                        <li class="nav-item text-white d-flex align-items-center px-3">
+                            Bonjour {{ app.user.userIdentifier }}
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-warning" href="{{ path('app_logout') }}">Se déconnecter</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_login') }}">Se connecter</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_register') }}">Ouvrir un compte</a>
+                        </li>
+                    {% endif %}
                 </ul>
                 </div>
             </div>

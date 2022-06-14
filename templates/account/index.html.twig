@@ -4,6 +4,11 @@
 
 {% block body %}
 
-    {{ app.user.lastname }} {{ app.user.firstname }} - ({{ app.user.email }})
+    <div class="d-flex align-items-center justify-content-between pb-5">
+        <div>
+            <h1 class="display-5 m-0">{{ app.user.firstname }} {{ app.user.lastname }}</h1>
+            <p class="lead">{{ app.user.email }}</p>
+        </div>
+    </div>
 
 {% endblock %}
