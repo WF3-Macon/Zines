@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class HomeController extends AbstractController
 {
@@ -42,6 +43,7 @@ class HomeController extends AbstractController
     }
 
     #[Route('/magazine/new', name: 'new_magazine')]
+    #[IsGranted('ROLE_USER')]
     public function new(Request $request, MagazineRepository $magazineRepository): Response
     {
 		// Instancie l'entité qui a permis de générer notre formulaire
@@ -72,6 +74,7 @@ class HomeController extends AbstractController
     }
 
     #[Route('/magazine/edit/{id}', name: 'edit_magazine', requirements: ['id' => '\d+'])]
+    #[IsGranted('ROLE_USER')]
     public function edit(Magazine $magazine, Request $request, MagazineRepository $magazineRepository): Response
     {
         $form = $this->createForm(MagazineFormType::class, $magazine);
@@ -90,6 +93,7 @@ class HomeController extends AbstractController
     }
 
     #[Route('/magazine/delete/{id}', name:'magazine_delete', requirements: ['id' => '\d+'], methods: ['POST'])]
+    #[IsGranted('ROLE_USER')]
     public function delete(Magazine $magazine, Request $request, MagazineRepository $magazineRepository): RedirectResponse
     {
 		// Récupère le jeton CSRF généré dans le formulaire

@@ -43,7 +43,7 @@ class Magazine
 
     #[Vich\UploadableField(mapping: 'magazines', fileNameProperty: 'cover')]
     #[Assert\Image(mimeTypesMessage: 'Ce fichier n\'est pas une image')]
-    #[Assert\File(maxSize: '600k', maxSizeMessage: 'Le fichier ne doit pas dépasser les {{ limit }} {{ suffix }}')]
+    #[Assert\File(maxSize: '1M', maxSizeMessage: 'Le fichier ne doit pas dépasser les {{ limit }} {{ suffix }}')]
     private $coverFile;
 
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
