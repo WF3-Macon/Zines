@@ -34,8 +34,8 @@
                         <div class="vr text-white"></div>
                     </li>
                     {% if app.user is not null %}
-                        <li class="nav-item text-white d-flex align-items-center px-3">
-                            Bonjour {{ app.user.userIdentifier }}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_account') }}">Bonjour {{ app.user.userIdentifier }}</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-warning" href="{{ path('app_logout') }}">Se déconnecter</a>
