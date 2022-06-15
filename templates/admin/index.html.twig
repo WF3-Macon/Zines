@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration{% endblock %}
+
+{% block javascripts %}
+    {# Récupère le contenu de block "javascripts" de la base.html.twig pour éviter que son contenu ne soit écrasé par celui-ci #}
+    {{ parent() }}
+    <script src="{{ asset('js/changeRole.js') }}" defer></script>
+{% endblock %}
+
+{% block body %}
+
+    <div class="d-flex align-items-center justify-content-between pb-5">
+        <div>
+            <h1 class="display-5 m-0">Utilisateurs</h1>
+            <p class="lead">Liste de toutes les utilisateurs</p>
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr class="table-warning">
+                <th>#</th>
+                <th>Identitée</th>
+                <th>Email</th>
+                <th>Rôles</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td class="py-3">{{ user.userIdentifier }}</td>
+                    <td class="py-3">{{ user.email }}</td>
+                    <td class="py-3" id="roles_{{ user.id }}">
+                        {{ user.roles|first }}
+                    </td>
+                    <td class="py-3">
+                        <div class="btn-group">
+                            <button data-id="{{ user.id }}" data-role="ROLE_ADMIN" class="btn btn-danger">Administrateur</button>
+                            <button data-id="{{ user.id }}" data-role="ROLE_MODERATOR" class="btn btn-warning">Modérateur</button>
+                            <button data-id="{{ user.id }}" data-role="ROLE_USER" class="btn btn-secondary">Utilisateur</button>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
